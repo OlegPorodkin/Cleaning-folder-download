@@ -1,5 +1,8 @@
 package utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -10,6 +13,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 
 public class FileUtil {
+
+    private static final Logger LOGGER = LogManager.getLogger(FileUtil.class.getName());
 
     private final int numberOfDays;
 
@@ -32,6 +37,7 @@ public class FileUtil {
                 }
             }
             if (!file.getName().equals("Download")) {
+                LOGGER.info("delete" + file.getName());
                 return file.delete();
             } else return true;
         } else {
