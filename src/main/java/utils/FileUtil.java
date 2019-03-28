@@ -46,10 +46,12 @@ public class FileUtil {
     }
 
     public void deleteFile(final Path path) throws IOException {
+
         if ((getTime() - path.toFile().lastModified()) / (1000 * 60 * 60 * 24) > numberOfDays) {
             Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    LOGGER.info("delete" + file.getFileName());
                     Files.delete(file);
                     return FileVisitResult.CONTINUE;
                 }
@@ -61,9 +63,8 @@ public class FileUtil {
                         throw exc;
                     }
                     if (!dir.getFileName().toString().equals("Download")) {
+                        LOGGER.info("delete" + dir.getFileName());
                         Files.delete(dir);
-                    } else {
-                        System.out.println("test");
                     }
 
                     return FileVisitResult.CONTINUE;

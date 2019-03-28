@@ -6,6 +6,9 @@ import properties_util.LoadProperties;
 import utils.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileCleaner {
 
@@ -25,8 +28,14 @@ public class FileCleaner {
         fileHolder = new FileHolder(new File(loadProperties.getProperties("file.path")));
 
         fileUtil = new FileUtil(Integer.valueOf(loadProperties.getProperties("number.of.days")));
+
         LOGGER.info("Start cleaning ["+loadProperties.getProperties("file.path")+"] starting...");
-        fileUtil.deleteFile(fileHolder.getFile());
+        Path path = Paths.get(loadProperties.getProperties("file.path"));
+        try {
+            fileUtil.deleteFile(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         LOGGER.info("Cleaning ["+loadProperties.getProperties("file.path")+"] done");
     }
 }

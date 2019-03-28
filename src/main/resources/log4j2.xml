@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true" >
+<Configuration status="info" strict="true" monitorInterval="15">
     <Properties>
-        <Property name="basePath">target/logs</Property>
+        <Property name="basePath">logs</Property>
     </Properties>
 
     <Appenders>
         <RollingFile name="fileLogger"
                      fileName="${basePath}/clear_folder.log"
-                     filePattern="${basePath}/clear_folder-%d{yyyy-MM-dd}.log">
-            <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+                     filePattern="${basePath}/clear_folder-%d{yyyy-MM-dd}.log.7z"
+                     ignoreExceptions="false">
+            <PatternLayout charset="UTF-8">
+                <Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
             </Policies>
+            <DefaultRolloverStrategy max="5"/>
         </RollingFile>
 
         <Console name="console" target="SYSTEM_OUT">
@@ -22,7 +24,7 @@
     </Appenders>
 
     <Loggers>
-        <Root>
+        <Root level="debug">
             <appender-ref ref="console"/>
             <appender-ref ref="fileLogger"/>
         </Root>
